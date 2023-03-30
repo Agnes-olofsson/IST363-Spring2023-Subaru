@@ -3,7 +3,6 @@ import CarColorPicker from '../components/CarColorPicker';
 import Header from '../components/Header'
 import Layout from '../components/Layout'
 import Image from 'next/image';
-import Swatch from '../components/Swatch';
 
 import { getAllVehicles, getAllColors } from '../lib/api';
 
