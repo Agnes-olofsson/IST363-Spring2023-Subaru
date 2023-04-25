@@ -1,5 +1,5 @@
 import Heading from './Heading';
-import Image from 'next/Image';
+import Image from 'next/image';
 
 const TrimPicker = ({ trimLevels }) => {
     return <div>
