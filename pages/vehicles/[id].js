@@ -2,6 +2,8 @@ import Image from 'next/image'
 import TrimPicker from '../../components/TrimPicker';
 
 import { getAllVehicleSlugs, getVehicleDataBySlug } from '../../lib/api'
+import Layout from '../../components/Layout';
+import Showcase from '../../components/Showcase'
 
 export async function getStaticPaths() {
     const vehicles = await getAllVehicleSlugs();
@@ -35,18 +37,14 @@ export async function getStaticPaths() {
   
   export default function SingleVehiclePage({ vehicleData }) {
     const { title, featuredImage, vehicleInformation } = vehicleData;
-    const { trimLevels } = vehicleInformation
+    const { trimLevels, showcase } = vehicleInformation
     console.log({trimLevels});
-    return <div>
-        <h1>{title}</h1>
-        {featuredImage && 
-          <Image 
-          src={featuredImage.node.sourceUrl}
-          alt={featuredImage.node.altText}
-          width={featuredImage.node.mediaDetails.width}
-          height={featuredImage.node.mediaDetails.height}
-          />
-        }
+    return<Layout>
+        <Showcase
+        subheadline={`Subaru ${title}`}
+        headline= {showcase.headline ? showcase.headline : null}
+        backgroundImage={featuredImage ? featuredImage.node : null}
+        />
         <TrimPicker trimLevels={trimLevels}/>
-    </div>
+    </Layout>
   }
