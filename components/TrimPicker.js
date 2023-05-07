@@ -3,9 +3,113 @@ import { motion, AnimatePresence } from "framer-motion"
 
 import Heading from './Heading';
 import Image from 'next/image';
+import Label from './Label'
+import Select from './Select'
 
+import styles from './trimpicker.module.scss';
+import FormGroup from './FormGroup';
+
+const backgroundImages = [
+    {
+        name: "Lakeside",
+    },
+    {
+        name: "Lakeside City",
+    },
+    {
+        name: "City Park",
+    },
+    {
+        name: "City Street",
+    },
+    {
+        name: "Mountains",
+    },
+    {
+        name: "Race track",
+    },
+    {
+        name: "Mountain top",
+    },
+    {
+        name: "City parking lot",
+    },
+    {
+        name: "City Street",
+    },
+    {
+        name: "Parking Garage Top",
+    }
+];
 
 const TrimPicker = ({ trimLevels }) => {
+    const [activeTrimIndex, setActiveTrimIndex] = useState(0);
+    const [activeBackgroundIndex, setActiveBackgroundIndex] = useState(0);
+
+    return <section className={styles.trimpicker} id="trimPicker">
+        <div className={styles.trimpicker_image}>
+            <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className={styles.trimpicker_background_wrapper}
+                >
+                    <Image
+                    src={`/backgrounds/series-background-${parseInt(activeBackgroundIndex)+1}.jpg`}
+                    alt={backgroundImages[activeBackgroundIndex].name}
+                    width={1900}
+                    height={656}
+                    className={styles.trimpicker_image_background}
+                    />
+            </motion.div>
+            <motion.div
+                  key={trimLevels[activeTrimIndex].images.large.sourceUrl}
+                  initial={{ x: 50, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: -50, opacity: 0 }}
+                  className={styles.trimpicker_image_wrapper}
+            >
+                        <Image
+                            src={trimLevels[activeTrimIndex].images.large.sourceUrl}
+                            alt={trimLevels[activeTrimIndex].images.large.altText}
+                            width={trimLevels[activeTrimIndex].images.large.mediaDetails.width}
+                            height={trimLevels[activeTrimIndex].images.large.mediaDetails.height}
+                            className={styles.trimpicker_image_large}
+                            />
+            </motion.div>
+        </div>
+        <div className={styles.trimpicker_text}>
+            <Heading level={2}>Picture Yourself Behind the Wheel</Heading>
+            <FormGroup>
+                <Label>I want to drive a...</Label>
+                <Select 
+                    options={trimLevels.map((trimLevel, index) => {
+                        return {
+                            value: index,
+                            label: trimLevel.name
+                        }
+                    })}
+                    changeHandler={setActiveTrimIndex}
+                    />
+            </FormGroup>
+
+            <FormGroup>
+                <Label>Change the driving location to...</Label>
+                <Select 
+                options={backgroundImages.map((backgroundImage, index) => {
+                    return {
+                        value: index,
+                        label: backgroundImage.name
+                    }
+                })}
+                changeHandler={setActiveBackgroundIndex}
+                />
+            </FormGroup>
+        </div>
+    </section>
+}
+
+/*const TrimPicker = ({ trimLevels }) => {
     
     // state variable, setter funktion varible goes inside of []
     const [activeIndex, setActiveIndex] = useState(0);
@@ -52,4 +156,5 @@ const TrimPicker = ({ trimLevels }) => {
     </div>
 
 }
+*/
 export default TrimPicker;

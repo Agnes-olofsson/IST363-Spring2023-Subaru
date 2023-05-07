@@ -4,6 +4,8 @@ import TrimPicker from '../../components/TrimPicker';
 import { getAllVehicleSlugs, getVehicleDataBySlug } from '../../lib/api'
 import Layout from '../../components/Layout';
 import Showcase from '../../components/Showcase'
+import Container from '../../components/Container';
+import ColorPicker from '../../components/ColorPicker';
 
 export async function getStaticPaths() {
     const vehicles = await getAllVehicleSlugs();
@@ -37,7 +39,7 @@ export async function getStaticPaths() {
   
   export default function SingleVehiclePage({ vehicleData }) {
     const { title, featuredImage, vehicleInformation } = vehicleData;
-    const { trimLevels, showcase } = vehicleInformation
+    const { trimLevels, showcase, vehicleColors } = vehicleInformation
     console.log({trimLevels});
     return<Layout>
         <Showcase
@@ -45,6 +47,9 @@ export async function getStaticPaths() {
         headline= {showcase.headline ? showcase.headline : null}
         backgroundImage={featuredImage ? featuredImage.node : null}
         />
+        <Container>
         <TrimPicker trimLevels={trimLevels}/>
+        <ColorPicker vehicleColors={vehicleColors}/>
+        </Container>
     </Layout>
   }
