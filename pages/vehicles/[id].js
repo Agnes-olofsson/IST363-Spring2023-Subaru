@@ -1,9 +1,10 @@
 import Image from 'next/image'
 import TrimPicker from '../../components/TrimPicker';
 
-import { getAllVehicleSlugs, getVehicleDataBySlug } from '../../lib/api'
+import { getAllVehicleSlugs, getVehicleDataBySlug } from '../../lib/api';
 import Layout from '../../components/Layout';
-import Showcase from '../../components/Showcase'
+import Showcase from '../../components/Showcase';
+import CallToAction from '../../components/CallToAction';
 import Container from '../../components/Container';
 import ColorPicker from '../../components/ColorPicker';
 
@@ -51,5 +52,6 @@ export async function getStaticPaths() {
         <TrimPicker trimLevels={trimLevels}/>
         <ColorPicker vehicleColors={vehicleColors}/>
         </Container>
+        <CallToAction vehicleName={title}/>
     </Layout>
   }
